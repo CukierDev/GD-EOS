@@ -65,10 +65,11 @@ void *get_platform_specific_options() {
     String xAudio29DllPath;
     if (OS::get_singleton()->has_feature("editor")) {
         String bin_path = "res://addons/gd_eos/bin/";
-#if defined(_WIN32)
-        xAudio29DllPath = ProjectSettings::get_singleton()->globalize_path(bin_path.path_join("x86").path_join("xaudio2_9redist.dll"));
-#else // defined(_WIN64)
-        xAudio29DllPath = ProjectSettings::get_singleton()->globalize_path(bin_path.path_join("x64").path_join("xaudio2_9redist.dll"));
+// Super janky solution
+#if defined(_WIN64)
+    xAudio29DllPath = "C:\\Windows\\System32\\XAudio2_9.dll";
+#else
+    xAudio29DllPath = "C:\\Windows\\SysWOW64\\XAudio2_9.dll";
 #endif
     } else {
         xAudio29DllPath = OS::get_singleton()->get_executable_path().get_base_dir().path_join("xaudio2_9redist.dll");
